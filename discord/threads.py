@@ -252,6 +252,21 @@ class Thread(Messageable, Hashable):
             raise ClientException('Parent channel not found')
         return parent.category_id
 
+    @property
+    def nsfw(self) -> bool:
+        """Whether the thread is "not safe for work" or not.
+
+        An NSFW thread is a thread that has a parent that is an NSFW channel,
+        i.e. :attr:`.TextChannel.nsfw` is ``True``.
+
+        Returns
+        -------
+        :class:`bool`
+            Whether the Thread is NSFW or not.
+        """
+        parent = self.parent
+        return parent is not None and parent.nsfw
+
     def is_private(self) -> bool:
         """:class:`bool`: Whether the thread is a private thread.
 
@@ -267,15 +282,6 @@ class Thread(Messageable, Hashable):
         i.e. :meth:`.TextChannel.is_news` is ``True``.
         """
         return self._type is ChannelType.news_thread
-
-    def is_nsfw(self) -> bool:
-        """:class:`bool`: Whether the thread is NSFW or not.
-
-        An NSFW thread is a thread that has a parent that is an NSFW channel,
-        i.e. :meth:`.TextChannel.is_nsfw` is ``True``.
-        """
-        parent = self.parent
-        return parent is not None and parent.is_nsfw()
 
     def permissions_for(self, obj: Union[Member, Role], /) -> Permissions:
         """Handles permission resolution for the :class:`~discord.Member`

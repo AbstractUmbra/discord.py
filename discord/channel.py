@@ -123,10 +123,6 @@ class TextChannel(discord.abc.Messageable, discord.abc.GuildChannel, Hashable):
         :attr:`~Permissions.manage_messages` bypass slowmode.
     nsfw: :class:`bool`
         If the channel is marked as "not safe for work".
-
-        .. note::
-
-            To check if the channel or the guild of that channel are marked as NSFW, consider :meth:`is_nsfw` instead.
     """
 
     __slots__ = (
@@ -208,10 +204,6 @@ class TextChannel(discord.abc.Messageable, discord.abc.GuildChannel, Hashable):
         .. versionadded:: 2.0
         """
         return [thread for thread in self.guild.threads if thread.parent_id == self.id]
-
-    def is_nsfw(self) -> bool:
-        """:class:`bool`: Checks if the channel is NSFW."""
-        return self.nsfw
 
     def is_news(self) -> bool:
         """:class:`bool`: Checks if the channel is a news channel."""
@@ -1289,10 +1281,6 @@ class CategoryChannel(discord.abc.GuildChannel, Hashable):
         top category is position 0.
     nsfw: :class:`bool`
         If the channel is marked as "not safe for work".
-
-        .. note::
-
-            To check if the channel or the guild of that channel are marked as NSFW, consider :meth:`is_nsfw` instead.
     """
 
     __slots__ = ('name', 'id', 'guild', 'nsfw', '_state', 'position', '_overwrites', 'category_id')
@@ -1321,10 +1309,6 @@ class CategoryChannel(discord.abc.GuildChannel, Hashable):
     def type(self) -> ChannelType:
         """:class:`ChannelType`: The channel's Discord type."""
         return ChannelType.category
-
-    def is_nsfw(self) -> bool:
-        """:class:`bool`: Checks if the category is NSFW."""
-        return self.nsfw
 
     @utils.copy_doc(discord.abc.GuildChannel.clone)
     async def clone(self, *, name: Optional[str] = None, reason: Optional[str] = None) -> CategoryChannel:
@@ -1501,10 +1485,6 @@ class StoreChannel(discord.abc.GuildChannel, Hashable):
         top channel is position 0.
     nsfw: :class:`bool`
         If the channel is marked as "not safe for work".
-
-        .. note::
-
-            To check if the channel or the guild of that channel are marked as NSFW, consider :meth:`is_nsfw` instead.
     """
 
     __slots__ = (
@@ -1551,10 +1531,6 @@ class StoreChannel(discord.abc.GuildChannel, Hashable):
         denied = Permissions.voice()
         base.value &= ~denied.value
         return base
-
-    def is_nsfw(self) -> bool:
-        """:class:`bool`: Checks if the channel is NSFW."""
-        return self.nsfw
 
     @utils.copy_doc(discord.abc.GuildChannel.clone)
     async def clone(self, *, name: Optional[str] = None, reason: Optional[str] = None) -> StoreChannel:
